@@ -1,0 +1,73 @@
+body {
+	background: #476C9B;
+}
+ul {
+	border-radius: 10px;
+    list-style-type: none;
+    margin: 0 10px;
+    padding: 0;
+    overflow: hidden;
+    background-color: gray;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+
+li a:hover {
+    background-color: lightgray;
+}
+
+
+.jumbotron h1 {
+	font-size: 50px;
+}
+.jumbotron {
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	background: lightgray;
+}
+
+.container{
+	
+	background: gray;
+	border-radius: 25px;
+	margin: 0 20px;
+	text-align: center;
+	color: white;
+}
+.form{
+	background: gray;
+	border-radius: 25px;
+	margin: 0 30%;
+	text-align: center;
+	color: white;
+}
+.form button {
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: gray;
+}
+.form button:active {
+
+	color: white;
+	background-color:#476C9B ;
+}
+
+.footer {
+
+	background-color: gray;
+	color: white;
+	text-align: center;
+}
+
