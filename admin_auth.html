@@ -19,26 +19,41 @@ password
 <ul>
   <li><a class="active" href="./template.html">Home</a></li>
   <li><a href="admin_dashboard.html">Dashboard</a></li>
+<<<<<<< HEAD
   <li><a href="#contact">Contact</a></li>
   <li><a href="#about">About</a></li>
+=======
+  <li><a href="./edit_user.html">Edit User</a></li>
+  <li><a href="./edit_page.html">Edit Page</a></li>
+>>>>>>> new_version
   <li><a href="./admin_auth.html">Login</a></li>
 </ul>
-<div class="form">
-	<form  action="" method="post">
-	<h3>Registration</h3>
-	<p>Email: <input type="email" name="email" placeholder="username@example.com"></p>
-	<p>Password: <input type="password" name="password"></p>
-	<button>Submit</button>
-</form>	
+<div class="form-container">
+	<header>Registration</header>
+	<br>
+	<form class="form">
+		<p class="email-header">Email</p>
+		<input type="email" name="email" placeholder="www.example@email.com" required><br>
+		<p class="password-header">Password</p>
+		<input type="password" name="password" placeholder="password">
+		<br>
+		<input type="submit" name="submit">
+	</form>
 </div>
-<div class="form">
-	<form action="" method="post">
-	<h3>Login</h3>
-	<p>Email: <input type="email" name="email" placeholder="username@example.com"></p>
-	<p>Password: <input type="password" name="password"></p>
-	<button>Submit</button>
-</form>	
+<div class="form-container">
+	<header>Login</header>
+	<br>
+	<form class="form">
+		<p class="email-header">Email</p>
+		<input type="email" name="email" placeholder="www.example@email.com" required><br>
+		<p class="password-header">Password</p>
+		<input type="password" name="password" placeholder="password">
+		<br>
+		<input type="submit" name="submit">
+	</form>
 </div>
-
+<footer class="login-register">
+	@trademark
+</footer>
 </body>
 </html>
