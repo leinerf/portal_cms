@@ -31,8 +31,8 @@ li a:hover {
 }
 body{
 
-	background-image: url("sea.jpg");
-	background-size: 100%;
+	background-image: url("../images/sea.jpg");
+	background-size: cover;
 }
 .container{
 	background-color: rgba(211,211,211,0.7);
@@ -125,10 +125,12 @@ header.table-header{
 }
 
 .dashboard-container tr:nth-child(even){
+	border-color: white;
 	background-color: white;
 }
 
 .dashboard-container tr:nth-child(odd){
+	border-color: gray;
 	background-color: gray;
 }
 .table-container{
@@ -182,7 +184,7 @@ footer.edit-page {
 	display: block;
 	background-color: #969696;
 	text-align:center;
-	margin-top: 6%;
+	margin-top: 23%;
 	padding: 5px;
 }
 .edit-textarea{
@@ -229,4 +231,10 @@ header.edit-header{
 	padding: 1%;
 
 	/*rgba(0, 0, 0, 0.5);*/
+}
+
+table {
+	width: 50%;
+	height: 50%;
+	border-collapse: collapse;
 }
