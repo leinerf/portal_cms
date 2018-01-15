@@ -1,13 +1,16 @@
-body {
-	
+html,body{
+	padding: 0;
+	margin: 0;
 }
 ul {
-	border-radius: 10px;
+	position: fixed;
+	top: 0;
+	width: 100%;
     list-style-type: none;
-    margin: 0 10px;
+    margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: gray;
+    background-color:#969696;
 }
 
 li {
@@ -19,66 +22,18 @@ li a {
     color: white;
     text-align: center;
     padding: 14px 16px;
+    font-size: 1.3em;
     text-decoration: none;
-
 }
 
 li a:hover {
-    background-color: lightgray;
+    background-color: #D3D3D3;
 }
-
-
-.jumbotron h1 {
-	font-size: 50px;
+body{
+	background-image: url("landscape.jpg");
+	background-size: 100%;
 }
-.jumbotron {
-	border-radius: 10px;
-	margin: 10px;
-	padding: 10px;
-	background: lightgray;
-}
-
 .container{
+	margin:10%;
 	
-	background: gray;
-	border-radius: 25px;
-	margin: 0 20px;
-	text-align: center;
-	color: white;
-}
-.form{
-	background: gray;
-	border-radius: 25px;
-	margin: 0 30%;
-	text-align: center;
-	color: white;
-}
-.form button {
-	margin-bottom: 10px;
-	text-decoration: none;
-	color: gray;
-}
-.form button:active {
-
-	color: white;
-	background-color:#476C9B ;
-}
-
-.footer {
-
-	background-color: gray;
-	color: white;
-	text-align: center;
-}
-
-.sidenav {
-    height: 100%;
-    width: 160px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 20px;
 }

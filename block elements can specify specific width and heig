@@ -1,0 +1,5 @@
+block elements can specify specific width and height
+default position is static
+absolute means it exist outside of it
+fixed means itll move with the view
+recreate everything later
