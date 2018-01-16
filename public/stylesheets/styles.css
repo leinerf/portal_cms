@@ -93,7 +93,7 @@ body{
 
 	/*rgba(0, 0, 0, 0.5);*/
 }
-/*
+
 header.table-header{
 	text-decoration: underline;
 	display: inline;
@@ -104,27 +104,33 @@ header.table-header{
 
 }
 
-.dashboard-container th{
-
-	font-size: 1.3em;
-	background-color: navy;
-	color: white;
-}
-
 .dashboard-container tr:nth-child(even){
-	border-color: white;
-	background-color: white;
+	background-color: rgba(0,0,0,0.5);
+	color: rgba(255,255,255,0.8);
+	font-size: 1em;
+	text-transform: capitalize;
 }
 
 .dashboard-container tr:nth-child(odd){
-	border-color: gray;
-	background-color: gray;
+	font-size: 1em;
+	text-transform: capitalize;
+}
+
+.dashboard-header{
+	font-size: 1.2em;
+	background-color: rgba(0,0,0,0.5);
+	border-color: rgba(211,211,211,0.7);
+	color: rgba(255,255,255,0.8);
 }
 .table-container{
 	width: 80%;
 	margin: 0 10%;
+	text-align: center;
+	background-color: rgba(255,255,255,0.5);
+	border-radius: 5px;
+
 }
-*/
+
 footer  {
 	position:absolute;
   	bottom:0;
@@ -137,37 +143,42 @@ footer  {
 .header-content{
 	padding: 2%;
 }
-tr{
+/*tr{
 	text-align: center;
-}
-
-.header-content button{
+}*/
+/*.header-content button{
 	font-size: 1em;
 	width: 30%;
 	height: 5%;
 	background-color: #00C851;
 	border-color: #00C851;
 	border-radius: 5px;
+}*/
+.add-page{
+	font-size: 1.2em;
+	background-color: rgba(124,252,0,0.5);
+	border-color: rgba(124,252,0,0.5);
+	border-radius: 5px;
 }
 
 .edit {
-	font-size: 1em;
-	background-color: #00C851;
-	border-color: #00C851;
+	font-size: 0.9em;
+	background-color: rgba(124,252,0,0.5);
+	border-color: rgba(124,252,0,0.5);
 	border-radius: 5px;
 }
 
 .delete {
 	font-size: 0.9em;
-	background-color: #ff4444;
-	border-color: #ff4444;
+	background-color: rgba(255, 68, 68,0.8);
+	border-color: rgba(255, 68, 68,0.5);
 	border-radius: 5px;
 }
 
 .show {
 	font-size: 0.9em;
-	background-color: #33b5e5;
-	border-color: #33b5e5;
+	background-color: rgba(51, 181, 229,0.8);
+	border-color: rgba(51, 181, 229,0.8);
 	border-radius: 5px;
 }
 
