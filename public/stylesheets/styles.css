@@ -155,13 +155,20 @@ footer  {
 	border-color: #00C851;
 	border-radius: 5px;
 }*/
-.add-page{
+a.add-page{
+	color: black;
+	text-decoration: none;
+	padding: 1%;
 	font-size: 1.2em;
 	background-color: rgba(124,252,0,0.5);
 	border-color: rgba(124,252,0,0.5);
 	border-radius: 5px;
-}
 
+}
+a.add-page:active{
+	color: black;
+	text-decoration: none;
+}
 .edit {
 	font-size: 0.9em;
 	background-color: rgba(124,252,0,0.5);
