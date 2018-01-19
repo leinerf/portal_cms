@@ -13,25 +13,26 @@ password
 <div class="form-container">
 	<header>Registration</header>
 	<br>
-	<form class="form">
+	<form class="form" method="post" action="/auth/register">
 		<p class="email-header">Email</p>
 		<input type="email" name="email" placeholder="www.example@email.com" required><br>
 		<p class="password-header">Password</p>
 		<input type="password" name="password" placeholder="password">
 		<br>
-		<input type="submit" name="submit">
+		<input type="submit" name="submit1">
 	</form>
 </div>
+
 <div class="form-container">
 	<header>Login</header>
 	<br>
-	<form class="form">
+	<form class="form" method="post" action="/auth/login">
 		<p class="email-header">Email</p>
-		<input type="email" name="email" placeholder="www.example@email.com" required><br>
+		<input type="email" name="email2" placeholder="www.example@email.com" required><br>
 		<p class="password-header">Password</p>
-		<input type="password" name="password" placeholder="password">
+		<input type="password" name="password2" placeholder="password">
 		<br>
-		<input type="submit" name="submit">
+		<input type="submit" name="submit2">
 	</form>
 </div>
 <% include ./partials/footer.ejs %>

@@ -1,0 +1,9 @@
+create a landing page
+adjust template
+change the login and register thing by friday 
+
+
+relative  where you are
+absolute  specific patth
+
+routes too many connections to the database

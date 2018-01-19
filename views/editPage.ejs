@@ -4,15 +4,15 @@
 <div class="edit-container">
 	<header class="edit-header">Template Content</header>
 	<br>
-	<form class="form">
+	<form class="form" method="post" action="/admin/addpage">
 		<p class="email-header">Title</p>
-		<input type="text" name="email" placeholder="Title" required><br>
+		<input type="text" name="title" placeholder="Title" required><br>
 		<p class="email-header">Content</p>
-		<textarea class="edit-textarea" placeholder="Content">
+		<textarea class="edit-textarea" name="content" placeholder="Content">
 			
 		</textarea>
 		<p class="email-header">URL</p>
-		<input type="text" name="password" placeholder="URL">
+		<input type="text" name="url" placeholder="URL">
 		<br>
 		<button class="template-choice">Template Choice</button> 
 		<input class="edit-submit" type="submit" name="submit">
