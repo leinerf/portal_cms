@@ -170,21 +170,27 @@ a.add-page:active{
 	color: black;
 	text-decoration: none;
 }
-.edit {
+a.edit {
+	text-decoration: none;
+	color: black
 	font-size: 0.9em;
 	background-color: rgba(124,252,0,0.5);
 	border-color: rgba(124,252,0,0.5);
 	border-radius: 5px;
 }
 
-.delete {
+a.delete {
+	text-decoration: none;
+	color: black
 	font-size: 0.9em;
 	background-color: rgba(255, 68, 68,0.8);
 	border-color: rgba(255, 68, 68,0.5);
 	border-radius: 5px;
 }
 
-.show {
+a.show {
+	text-decoration: none;
+	color: black
 	font-size: 0.9em;
 	background-color: rgba(51, 181, 229,0.8);
 	border-color: rgba(51, 181, 229,0.8);

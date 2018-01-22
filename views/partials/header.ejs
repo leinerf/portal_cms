@@ -9,4 +9,8 @@
   <li><a class="active" href="/home">Home</a></li>
   <li><a href="/admin/">Dashboard</a></li>
   <li><a href="/auth/login">Login</a></li>
+  <li><a href="/auth/logout">Logout</a></li>
+  <% if(typeof link !== 'undefined' ){%>
+  		<li><a href=""><%= link %></a></li>
+  <% } %>
 </ul>

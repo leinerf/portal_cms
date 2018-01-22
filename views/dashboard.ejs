@@ -6,10 +6,11 @@
 -->
 
 <% include partials/header %>
+
 <div class="dashboard-container">
 <div class="header-content">
 	<header class="table-header">Table of Templates</header>
-	<a href="/admin/addpage" class="add-page">Add Pages</a>
+	<a href="/admin/addpage/" class="add-page">Add Pages</a>
 </div>			
 <table class="table-container">
 	
@@ -19,78 +20,25 @@
 	<th>Options</th>
 </thead>
 <tbody>
+<%pages.forEach(function(page){ %>
 	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
+		
+			<td>
+				<%= page.title %>
+			</td>
+			<td>
+				date
+			</td>
+			<td>				
+				<a class="delete" href="/admin/delete/<%= page.id %>" >delete</a> 
+				<a href="/admin/editpage/<%= page.id %>" class="edit">edit</a>
+				<a href="/admin/showpage/<%= page.id %>" class="show">show</a>
+				
+			</td>
+		
+
 	</tr>
-	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
-	</tr>
-	<tr>
-		<td>
-			hello
-		</td>
-		<td>
-			date
-		</td>
-		<td>
-			<button class="delete">delete</button> <button class="edit">edit</button> <button class="show">show</button>
-			
-		</td>
-	</tr>				
+<%});%>			
 </tbody>
 <tfoot>
 	

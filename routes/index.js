@@ -1,14 +1,11 @@
 var express = require('express');
-var mongoose  = require('mongoose');
+var userModel = require("../models/users.js");
+var pagesModel = require("../models/pages.js");
 var router = express.Router();
 
 //data can be urlencoded key value pairs
-var userSchema = mongoose.Schema({
-	email: { type : String , unique : true, required : true },
-	password: { type : String ,unique: false, required : true }
-})
 
-var userModel = mongoose.model('users', userSchema);
+
 
 
 
@@ -18,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/home', function(req, res, next) {
-  res.render('landing');
+  res.render('landing',{link:"testing"});
 });
 
 router.get('/auth/login',function(req,res,next){
@@ -30,14 +27,20 @@ router.post('/auth/login',function(req,res,next){
 			console.log("it went through here");
 			if(err){
 				console.log(err);
-				res.render('login');
+				res.render('login',{error:err});
 			}
 			else if(foundUser === null){
 				res.render('login');
 			}
 			else if(req.body.password2 === foundUser.password){
+				console.log("password works");
+				console.log(req.session.user);
+				req.session.user =  req.body.email2;
 				console.log('successful login')
 				res.redirect('/admin');
+			}
+			else{
+				res.send("wrong password")
 			}
 		});
 	
@@ -57,13 +60,17 @@ router.post('/auth/register',function(req,res,next){
 			res.json(err.message);
 		} else {
 			console.log(newUser);
-			res.redirect('/admin/')		
+			res.redirect('/auth/login')		
 		}
 	})
 	
 
 });
 
+router.get('/auth/logout', function(req, res) {
+  req.session.reset();
+  res.redirect('/');
+});
 
 router.get('/test',function(req, res){
 	var newUser = new userModel({
@@ -82,4 +89,25 @@ router.get('/test',function(req, res){
 	});
 	res.end();
 })
+
+router.get('/:pages',function(req, res){
+	pagesmodel.findOne({
+		url: req.params.page.trim()
+	},
+	function(err,foundPage){
+		if(err){
+			return res.send(err);
+		}
+		else if(foundPage){
+			res.render("template", {
+				title: foundPage.title,
+				content: foundPage.content
+			});
+		} else {
+			res.status(404).send("404 - Not found yo");
+		}
+	})
+});
+
+
 module.exports = router;
