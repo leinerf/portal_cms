@@ -2,6 +2,7 @@ var mongoose  = require('mongoose');
 var userModel = require("./users.js");
 var pagesModel = require("./pages.js");
 
+
 mongoose.connect("mongodb://localhost/test");//
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -30,47 +31,53 @@ userModels = [
 
 pagesModels =[
 	{
-	author: "helloWorld1@gmail.com",
 	title: "Something1",
 	content:"qrqwerqwerqwer",
-	url: "qpwoieh"
+	url: "qpwoieh",
+	visible: true
+
 	},
 	{
-	author: "helloWorld2@gmail.com",
 	title: "Something2",
 	content:"qrqwerqwerqwer",
-	url: "qpwoiehr"
+	url: "qpwoiehr",
+	visible: true
+
 	},
 	{
-	author: "helloWorld3@gmail.com",
 	title: "Something3",
 	content:"qrqwerqwerqwer",
-	url: "qpwoie"
+	url: "qpwoie",
+	visible: true
+
 	},
 	{
-	author: "helloWorld1@gmail.com",
 	title: "Something4",
 	content:"qrqwerqwerqwer",
-	url: "qpwoi"
+	url: "qpwoi",
+	visible: true
+
 	},
 	{
-	author: "helloWorld1@gmail.com",
 	title: "Something5",
 	content:"qrqwerqwerqwer",
-	url: "qpwo"
+	url: "qpwo",
+	visible: true
+
 	},
 	{
-	author: "helloWorld3@gmail.com",
 	title: "Something6",
 	content:"qrqwerqwerqwer",
-	url: "qpwo"
+	url: "qpwo",
+	visible: true
+	
 	}
 
 ]
 
 
-var createModels = function(model,content){
-
+var createUserModels = function(model,content){
+	
 	for(var i = 0; i < content.length;++i){
 		model.create(content[i], function(err, newModel){
 		console.log(newModel);
@@ -78,6 +85,7 @@ var createModels = function(model,content){
 			console.log(err);
 		
 		} else {
+			console.log("eirhqowierh")
 			console.log(newModel);
 		
 		}
@@ -85,7 +93,50 @@ var createModels = function(model,content){
 	}
 };
 
-createModels(userModel,userModels);
-createModels(pagesModel,pagesModels);
+var createPageModels = function(model,modelData,email){
+	console.log(typeof email);
+	userModel.findOne({email: "helloWorld1@gmail.com"},function(err,foundUser){
+		if(err){
 
+		}
+		else if(foundUser ){
+			for(var i = 0; i < modelData.length;++i){
+				console.log(foundUser);
+				modelStructure = {
+					user: foundUser.id,
+					title: modelData[i].title,
+					content:modelData[i].content,
+					url: modelData[i].url,
+					visible: modelData[i].visible
+				}
+				console.log("woi325123oicnu412039u4 c12ou34c12 po3iu41p2 ocu42op13iu4 cp12ou4 po21i3u4 cpoehrqpowiehrpo");
+				console.log(modelStructure);
+				model.create(modelStructure, function(err, newModel){
+					console.log(newModel);
+					if(err){
+						console.log(err);
+					
+					} else {
+						console.log(newModel);
+					
+					}
+				});
+			}
+		}
+
+	});
+	
+};
+//createUserModels(userModel,userModels);
+
+userModels.forEach(function(model){
+	console.log(model.email)
+	createPageModels(pagesModel,pagesModels,model.email);
+});
+
+pagesModel.find({user: "5a66848807c08e16f0d22596"},function(err,foundPages){
+	console.log(foundPages);
+})
+
+mongoose.connection.close();
 

@@ -1,10 +1,1 @@
-create a landing page
-adjust template
-change the login and register thing by friday 
-ejs variables are undefined if no javascript object is passed 
-
-
-relative  where you are
-absolute  specific patth
-
-routes too many connections to the database
+refactor

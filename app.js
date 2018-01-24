@@ -1,23 +1,25 @@
+
 //anything that is connected once
+
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('client-sessions');
-var mongoose = require("mongoose");//
+var favicon = require('serve-favicon');//figure out what this does
+var logger = require('morgan');//figure out what this does
+var cookieParser = require('cookie-parser');//figure out what this does
+var bodyParser = require('body-parser');//be able to get form data
+var session = require('client-sessions');//be able to have cookie data persist
+var mongoose = require("mongoose");//be able to use the database
+var user = require("./models/users.js")//user schema
 
 
-
-var index = require('./routes/index');
-var users = require('./routes/users');
-var admin = require('./routes/admin');
+var index = require('./routes/index');//things people can see when they are not logged in 
+//var users = require('./routes/users'); might not need it
+var admin = require('./routes/admin');//only when you're already login
 
 var app = express();
 
 
-//database
+//database connection
 mongoose.connect("mongodb://localhost/test");//
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -31,12 +33,13 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));//what does this do?
+app.use(bodyParser.json());//alows the user to parse their json
+app.use(bodyParser.urlencoded({ extended: false }));//alows urlencoded parsing
+app.use(cookieParser());//Idk why I need this
+app.use(express.static(path.join(__dirname, 'public')));//uses public for files that people can seee
 
+//sets the session as to where to set-cookie
 app.use(session({
   cookieName: 'session',
   secret: 'random_string_goes_here',
@@ -45,10 +48,29 @@ app.use(session({
 }));
 
 
+//checks if there is a user otherwise  it just goes next
+app.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+    user.findOne({ email: req.session.user.email }, function(err, user) {
+      if (user) {
+        req.user = user.toObject();
+        delete req.user.password; // delete the password from the session
+        req.session.user = user;  //refresh the session value
+        
+        res.locals.user = user;
 
-app.use('/admin',admin)
-app.use('/users', users);
-app.use('/', index);
+      }
+      // finishing processing the middleware and run the route
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
+app.use('/admin',admin);//after the person is authenticated they should be able to go through these routes
+//app.use('/users', users);
+app.use('/', index);//if they are not login they can access this
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

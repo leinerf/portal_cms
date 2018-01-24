@@ -6,11 +6,11 @@
 	<br>
 	<form class="form" method="post" action="/admin/editPage/<%= page.id %>">
 		<p class="email-header">Title</p>
-		<input type="text" name="title" placeholder="<%= page.title %>" required><br>
+		<input type="text" name="title" placeholder="<%= page.title %>" value="<%= page.title %>" required><br>
 		<p class="email-header">Content</p>
 		<textarea class="edit-textarea" name="content" placeholder="" required><%= page.content %></textarea>
 		<p class="email-header">URL</p>
-		<input type="text" name="url" placeholder="URL" required>
+		<input type="text" name="url" placeholder="URL" required value="<%= page.url %>">
 		<br>
 		<button class="template-choice">Template Choice</button> 
 		<input class="edit-submit" type="submit" name="submit">

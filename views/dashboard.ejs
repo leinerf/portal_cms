@@ -27,12 +27,14 @@
 				<%= page.title %>
 			</td>
 			<td>
-				date
+				<%= moment(page.date).format( 'MMM-DD-YYYY') %>
+				
 			</td>
 			<td>				
 				<a class="delete" href="/admin/delete/<%= page.id %>" >delete</a> 
 				<a href="/admin/editpage/<%= page.id %>" class="edit">edit</a>
 				<a href="/admin/showpage/<%= page.id %>" class="show">show</a>
+				<a href="/admin/<%= page.id %>" class="visible">visible</a>
 				
 			</td>
 		
