@@ -318,3 +318,7 @@ a.login-button:active{
 	padding: 2%;
 }
 
+a.register{
+	float: right;
+	text-align: right;
+}

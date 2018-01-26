@@ -1,6 +1,7 @@
 var express = require('express');
 var userModel = require("../models/users.js");
 var pagesModel = require("../models/pages.js");
+var moment = require('moment');
 var router = express.Router();
 
 //data can be urlencoded key value pairs
@@ -16,16 +17,15 @@ router.get('/home', function(req, res, next) {
   res.render('landing',{link:"testing"});
 });
 
-router.get("/examples", function(req, res,next){
-	res.render("landing",{link:"testing"});
-});
 
+// gets the login page
 router.get('/auth/login',function(req,res,next){
 	res.render('login');
 });
+
+//finds login credentials if its there its gucci
 router.post('/auth/login',function(req,res,next){
-		
-		userModel.findOne({email: req.body.email2},function(err,foundUser){
+		userModel.findOne({email: req.body.email},function(err,foundUser){
 			console.log("it went through here");
 			if(err){
 				console.log(err);
@@ -34,11 +34,11 @@ router.post('/auth/login',function(req,res,next){
 			else if(foundUser === null){
 				res.render('login');
 			}
-			else if(req.body.password2 === foundUser.password){
+			else if(req.body.password === foundUser.password){
 				console.log("password works");
 				req.session.user = foundUser;
 				console.log('successful login')
-				res.redirect('/admin');
+				res.redirect('/admin/' + req.session.user.id);
 			}
 			else{
 				res.render('login',{error:"wrong password"});
@@ -47,6 +47,16 @@ router.post('/auth/login',function(req,res,next){
 	
 });
 
+//gets the register route 
+router.get('/auth/register',function(req,res,next){
+	res.render("register");
+	//res.render('login');
+});
+
+
+
+//creates a user if email and password is good
+//check if there is another user in the database
 router.post('/auth/register',function(req,res,next){
 	console.log(req.body);
 	var formData ={
@@ -68,47 +78,47 @@ router.post('/auth/register',function(req,res,next){
 
 });
 
+//reset session and redirect to home page
 router.get('/auth/logout', function(req, res) {
   req.session.reset();
   res.redirect('/');
 });
 
-router.get('/test',function(req, res){
-	var newUser = new userModel({
-		email: "idfwy@people.com",
-		password: "qwierqwer"
-	});
-	newUser.save(function(err,user){
+
+router.get('/dashboard/',function(req,res,next){
+	pagesModel.find({visible:true},function(err,foundPages){
 		if(err){
 			console.log(err);
-		
+		}
+		else if(foundPages == null || foundPages == undefined){
+			res.redirect("/auth/login");
 		}
 		else{
-			console.log(user)
-		
+			console.log(foundPages);
+			res.render("dashboardVisible",{pages:foundPages,moment:moment});
 		}
 	});
-	res.end();
-})
+	
+});
+router.get('/showpage/:id',function(req,res,next){
 
-// router.get('/:pages',function(req, res){
-// 	pagesmodel.findOne({
-// 		url: req.params.page.trim()
-// 	},
-// 	function(err,foundPage){
-// 		if(err){
-// 			return res.send(err);
-// 		}
-// 		else if(foundPage){
-// 			res.render("template", {
-// 				title: foundPage.title,
-// 				content: foundPage.content
-// 			});
-// 		} else {
-// 			res.status(404).send("404 - Not found yo");
-// 		}
-// 	})
-// });
+	pagesModel.findOne({_id: req.params.id, visible:true},function(err,foundPage){
+		console.log(foundPage);
+		if(err){
+			console.log(err);
+			res.json(err);
+		}
+		else if(foundPage == null){
+			console.log("didnt find it");
+			res.send("didnt find it content");
+		}
+		else {
+			console.log(foundPage);
+			res.render("template",{page: foundPage});
+		}
 
+	})
+	
+});
 
 module.exports = router;

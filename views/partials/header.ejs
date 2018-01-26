@@ -7,10 +7,16 @@
 <body>
 <ul>
   <li><a class="active" href="/home">Home</a></li>
-  <li><a href="/admin/">Dashboard</a></li>
-  <li><a href="/auth/login">Login</a></li>
-  <li><a href="/auth/logout">Logout</a></li>
-  <% if(typeof link !== 'undefined' ){%>
-  		<li><a href=""><%= link %></a></li>
+  <% if(typeof user == 'undefined'){%>
+  		<li><a href="/dashboard/">Dashboard</a></li>
+  <% }  else { %>
+ 			<li><a href="/admin/<%= user.id %>">Dashboard</a></li>
   <% } %>
+
+  <% if(typeof user == 'undefined'){%>
+  		<li><a href="/auth/login">Login</a></li>
+  <% }  else { %>
+ 		 <li><a href="/auth/logout">Logout</a></li> 		
+  <% } %>
+
 </ul>

@@ -10,7 +10,6 @@
 <div class="dashboard-container">
 <div class="header-content">
 	<header class="table-header">Table of Templates</header>
-	<a href="/admin/addpage/<%= user_id %>" class="add-page">Add Pages</a>
 </div>			
 <table class="table-container">
 	
@@ -32,10 +31,7 @@
 			</td>
 			<td>		
 				<form>
-				<button formaction="/admin/delete/<%= page.id %>" formmethod="post" class="delete">delete</button>
-				<button formaction="/admin/editpage/<%= page.id %>" formmethod="get" class="edit"> edit</button>
-				<button formaction="/admin/showpage/<%= page.id %>" formmethod="get" class="show"> show</button>
-				<button formaction="/admin/visible/<%= page.id %>" formmethod="post" class="visible">visible</button>
+				<button formaction="/showpage/<%= page.id %>" formmethod="get" class="show"> show</button>
 				</form
 			</td>
 		

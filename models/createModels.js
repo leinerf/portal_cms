@@ -127,16 +127,17 @@ var createPageModels = function(model,modelData,email){
 	});
 	
 };
-//createUserModels(userModel,userModels);
+// createUserModels(userModel,userModels);
+
+
+
 
 userModels.forEach(function(model){
 	console.log(model.email)
 	createPageModels(pagesModel,pagesModels,model.email);
 });
 
-pagesModel.find({user: "5a66848807c08e16f0d22596"},function(err,foundPages){
-	console.log(foundPages);
-})
 
-mongoose.connection.close();
+
+
 
