@@ -52,7 +52,7 @@ router.post('/addpage/:id',function(req,res,next){
 			res.json(err.message);
 		} else {
 			console.log(newUser);
-			res.redirect('/admin/'+ req.params.id)		
+			res.json({title:newUser.title,content:newUser.content,url:newUser.url,id:newUser._id,date:newUser.date});
 		}
 	})
 	
@@ -169,14 +169,20 @@ router.post('/visible/:id',function(req,res,next){
 
 
 //route for delete
-router.post('/delete/:id',function(req,res){
-	pagesModel.deleteOne({_id:req.params.id.trim()},function(err){
+router.delete('/delete/:id',function(req,res){
+	console.log("it goes here too");
+	console.log(req.params.id);
+	pagesModel.findById(req.params.id,function(err,foundPage){
+		console.log(foundPage);
+	})
+	pagesModel.remove({_id :req.params.id.trim()},function(err){
 		if(err){
 			console.log(err);
 			res.send(err);
 		}
 		else{
-			res.redirect('/admin/' + req.params.id)
+			console.log("its goind here")
+			res.end();
 		}
 	});
 

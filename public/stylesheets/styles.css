@@ -172,7 +172,7 @@ a.add-page:active{
 }
 a.edit {
 	text-decoration: none;
-	color: black
+	color: black;
 	font-size: 0.9em;
 	background-color: rgba(124,252,0,0.5);
 	border-color: rgba(124,252,0,0.5);
@@ -181,7 +181,7 @@ a.edit {
 
 a.delete {
 	text-decoration: none;
-	color: black
+	color: black;
 	font-size: 0.9em;
 	background-color: rgba(255, 68, 68,0.8);
 	border-color: rgba(255, 68, 68,0.5);
@@ -190,7 +190,7 @@ a.delete {
 
 a.show {
 	text-decoration: none;
-	color: black
+	color: black;
 	font-size: 0.9em;
 	background-color: rgba(51, 181, 229,0.8);
 	border-color: rgba(51, 181, 229,0.8);
@@ -223,7 +223,7 @@ header.edit-header{
 }
 
 .edit-submit{
-	padding-bottom: : 5%;
+	padding-bottom: 5%;
 	display: block;
 	margin-left: 10%;
 	margin-top: 2%;
@@ -321,4 +321,44 @@ a.login-button:active{
 a.register{
 	float: right;
 	text-align: right;
+}
+
+#overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.8;
+	z-index: 100;
+	background: gray;
+	opacity:0.75;
+}
+#popup {
+    padding:1%;
+	display: none;
+	position: absolute;
+    border-radius: 5px;
+	top: 50%;
+	left: 50%;
+	background: #fff;
+	width: 500px;
+	height: 500px;
+	margin-left: -250px; /*Half the value of width to center div*/
+	margin-top: -250px; /*Half the value of height to center div*/
+	z-index: 200;
+}
+#popupclose {
+	float: right;
+	padding: 10px;
+	cursor: pointer;
+    border-radius: 5px;
+    background-color: #b4292f;
+}
+.popupcontent {
+	padding: 10px;
+}
+#button {
+	cursor: pointer;
 }

@@ -1,1 +1,12 @@
-Teacher helper app (special needs)
+delegate target
+$("#table").on("click")
+
+#addpage-modal{
+	width: 460px;
+	height: 380px;
+	position fixed;
+	width: 50%;
+	height: 50%;
+	
+}
+<div id="addpage-modal">

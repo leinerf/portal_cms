@@ -6,12 +6,31 @@
 -->
 
 <% include partials/header %>
-
+<div id="overlay"></div>
+<div id="popup">
+    <div class="popupcontrols">
+        <span id="popupclose">X</span>
+    </div>
+    <div class="popupcontent">
+        <form class="form" ><!-- // action="/admin/addpage/<%= user_id %>">-->
+            <p class="email-header">Title</p>
+            <input type="text" name="title" placeholder="Title" required><br>
+            <p class="email-header">Content</p>
+            <textarea class="edit-textarea" name="content" placeholder="content" required></textarea>
+            <p class="email-header">URL</p>
+            <input type="text" name="url" placeholder="URL" required>
+            <br>
+            <button class="template-choice">Template Choice</button>
+            <input onclick="myFunction()" class="edit-submit" type="submit" name="submit">
+        </form>
+    </div>
+</div>
 <div class="dashboard-container">
 <div class="header-content">
 	<header class="table-header">Table of Templates</header>
-	<a href="/admin/addpage/<%= user_id %>" class="add-page">Add Pages</a>
-</div>			
+	<button id="button">Add Pages</button>
+</div>
+
 <table class="table-container">
 	
 <thead class="dashboard-header">
@@ -30,13 +49,13 @@
 				<%= moment(page.date).format( 'MMM-DD-YYYY') %>
 				
 			</td>
-			<td>		
-				<form>
-				<button formaction="/admin/delete/<%= page.id %>" formmethod="post" class="delete">delete</button>
+			<td>
+                <button class="delete" data-field-id="<%= page.id %>">delete</button>
+                <form>
 				<button formaction="/admin/editpage/<%= page.id %>" formmethod="get" class="edit"> edit</button>
 				<button formaction="/admin/showpage/<%= page.id %>" formmethod="get" class="show"> show</button>
 				<button formaction="/admin/visible/<%= page.id %>" formmethod="post" class="visible">visible</button>
-				</form
+				</form>
 			</td>
 		
 
@@ -48,4 +67,79 @@
 </tfoot>
 </table>
 </div>
+<script type="text/javascript">
+    // Initialize Variables
+    var closePopup = document.getElementById("popupclose");
+    var overlay = document.getElementById("overlay");
+    var popup = document.getElementById("popup");
+    var button = document.getElementById("button");
+    // Close Popup Event
+    closePopup.onclick = function() {
+        overlay.style.display = 'none';
+        popup.style.display = 'none';
+    };
+    // Show Overlay and Popup
+    button.onclick = function() {
+        overlay.style.display = 'block';
+        popup.style.display = 'block';
+    }
+</script>
+
+<script>
+	var notIn = true;
+$(".delete").on("click",function(){
+    var button = $(this);
+    var pageId = $(this).attr("data-field-id");
+    console.log(pageId);
+	console.log("it went through here")
+    console.log("/admin/delete/"+ pageId + "\"");
+    $.ajax({
+		method:"DELETE",
+		url:"/admin/delete/"+ pageId
+		
+	})
+	.done(function( json ) {
+	    button.parent().parent().remove();
+});
+});
+
+$(".form").submit(function(e){
+	e.preventDefault();
+	var formData = {
+	title: $("input[name=title]").val(),
+	content: $("textarea").val(),
+	url: $("input[name=url]").val()
+	}
+	console.log()
+	console.log(formData);
+	$.ajax({
+		method:"POST",
+		url:"/admin/addpage/<%= user_id %>",
+		data:formData,
+		visible:true
+	})
+	.done(function( json ) {
+	console.log(json);
+  	var content =
+		"<tr><td>" +json.title + "</td><td>" + json.date +
+		"</td><td>" +
+        "<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
+        "<form><button formaction=\"/admin/editpage/" + json.id +
+		"\" formmethod=\"get\" class=\"edit\"> edit</button><button formaction=\"/admin/showpage/" + json.id +
+		"\" formmethod=\"get\" class=\"show\"> show</button><button formaction=\"/admin/visible/" + json.id +
+		"\" formmethod=\"post\" class=\"visible\">visible</button></form></td></tr>"
+  	$( "table tbody" ).append(content);
+});
+});
+    var overlay = document.getElementById("overlay");
+    var popup = document.getElementById("popup");
+$("#overlay").click(function(event) {
+    var overlay = document.getElementById("overlay");
+    var popup = document.getElementById("popup");
+    overlay.style.display = 'none';
+    popup.style.display = 'none';
+});
+
+
+</script>
 <% include partials/footer %>
