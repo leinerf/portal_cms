@@ -51,10 +51,15 @@
 			</td>
 			<td>
                 <button class="delete" data-field-id="<%= page.id %>">delete</button>
+				<% if(page.visible === true){%>
+					<button data-field-id="<%= page.id %>" class="visible" style="background: white;">visible</button>
+				<% } else { %>
+					<button data-field-id="<%= page.id %>" class="visible"  style="background: gray;">visible</button>
+				<% }%>
                 <form>
 				<button formaction="/admin/editpage/<%= page.id %>" formmethod="get" class="edit"> edit</button>
 				<button formaction="/admin/showpage/<%= page.id %>" formmethod="get" class="show"> show</button>
-				<button formaction="/admin/visible/<%= page.id %>" formmethod="post" class="visible">visible</button>
+
 				</form>
 			</td>
 		
@@ -83,62 +88,82 @@
         overlay.style.display = 'block';
         popup.style.display = 'block';
     }
-</script>
 
-<script>
-	var notIn = true;
-$(".delete").on("click",function(){
-    var button = $(this);
-    var pageId = $(this).attr("data-field-id");
-    console.log(pageId);
-	console.log("it went through here")
-    console.log("/admin/delete/"+ pageId + "\"");
-    $.ajax({
-		method:"DELETE",
-		url:"/admin/delete/"+ pageId
-		
-	})
-	.done(function( json ) {
-	    button.parent().parent().remove();
-});
-});
+	//create the delete button to delete the row if clicked
+	$(".delete").on("click",function(){
+		var button = $(this);
+		var pageId = $(this).attr("data-field-id");
+		console.log(pageId);
+		console.log("it went through here")
+		console.log("/admin/delete/"+ pageId + "\"");
+		$.ajax({
+			method:"DELETE",
+			url:"/admin/delete/"+ pageId
 
-$(".form").submit(function(e){
-	e.preventDefault();
-	var formData = {
-	title: $("input[name=title]").val(),
-	content: $("textarea").val(),
-	url: $("input[name=url]").val()
-	}
-	console.log()
-	console.log(formData);
-	$.ajax({
-		method:"POST",
-		url:"/admin/addpage/<%= user_id %>",
-		data:formData,
-		visible:true
-	})
-	.done(function( json ) {
-	console.log(json);
-  	var content =
-		"<tr><td>" +json.title + "</td><td>" + json.date +
-		"</td><td>" +
-        "<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
-        "<form><button formaction=\"/admin/editpage/" + json.id +
-		"\" formmethod=\"get\" class=\"edit\"> edit</button><button formaction=\"/admin/showpage/" + json.id +
-		"\" formmethod=\"get\" class=\"show\"> show</button><button formaction=\"/admin/visible/" + json.id +
-		"\" formmethod=\"post\" class=\"visible\">visible</button></form></td></tr>"
-  	$( "table tbody" ).append(content);
-});
-});
-    var overlay = document.getElementById("overlay");
-    var popup = document.getElementById("popup");
-$("#overlay").click(function(event) {
-    var overlay = document.getElementById("overlay");
-    var popup = document.getElementById("popup");
-    overlay.style.display = 'none';
-    popup.style.display = 'none';
-});
+		})
+		.done(function( json ) {
+			button.parent().parent().remove();
+		});
+	});
+    $(".visible").on("click",function(){
+        var button = $(this);
+        var pageId = $(this).attr("data-field-id");
+        console.log(pageId);
+        console.log("it went through here")
+        console.log("/admin/delete/"+ pageId + "\"");
+        $.ajax({
+            method:"PUT",
+            url:"/admin/visible/"+ pageId
+
+        })
+            .done(function( json ) {
+                if(json.visible){
+                    console.log(button);
+                    console.log(button.style);
+                    button[0].style.background = "white";
+				}
+				else{
+                    console.log(button);
+                    console.log(button.style);
+                    button[0].style.background = "gray";
+				}
+            });
+    });
+
+
+	$(".form").submit(function(e){
+		e.preventDefault();
+		var formData = {
+			title: $("input[name=title]").val(),
+			content: $("textarea").val(),
+			url: $("input[name=url]").val()
+		}
+		$.ajax({
+			method:"POST",
+			url:"/admin/addpage/<%= user_id %>",
+			data:formData,
+			visible:true
+		})
+		.done(function( json ) {
+			console.log(json);
+			var content =
+				"<tr><td>" +json.title + "</td><td>" + json.date +
+				"</td><td>" +
+				"<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
+				"<form><button formaction=\"/admin/editpage/" + json.id +
+				"\" formmethod=\"get\" class=\"edit\"> edit</button><button formaction=\"/admin/showpage/" + json.id +
+				"\" formmethod=\"get\" class=\"show\"> show</button><button formaction=\"/admin/visible/" + json.id +
+				"\" formmethod=\"post\" class=\"visible\">visible</button></form></td></tr>"
+			$( "table tbody" ).append(content);
+		});
+	});
+
+	$("#overlay").click(function(event) {
+		var overlay = document.getElementById("overlay");
+		var popup = document.getElementById("popup");
+		overlay.style.display = 'none';
+		popup.style.display = 'none';
+	});
 
 
 </script>

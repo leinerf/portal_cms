@@ -131,8 +131,7 @@ router.get('/showpage/:id',function(req,res,next){
 });
 
 //post route for the visible button 
-router.post('/visible/:id',function(req,res,next){
-	console.log("it goes through visible");
+router.put('/visible/:id',function(req,res,next){
 	pagesModel.findOne({_id:req.params.id}, function(err,foundPage){
 		if(err){
 			console.log(err);
@@ -142,29 +141,17 @@ router.post('/visible/:id',function(req,res,next){
 			res.send("didnt find it");
 		}
 		else {
-			if(foundPage.visible == true){
-				foundPage.visible = false
-			}
-			else{
-				foundPage.visible = true
-			}
-
+			foundPage.visible = !foundPage.visible;
 			pagesModel.update({_id: foundPage._id }, foundPage, function(err) {
 			  if(err){
 			  	console.log(err)
-
 			  }
 			  else{
-				console.log("hello world");
-			  	console.log(foundPage);
-				res.redirect('/admin/' + req.params.id)	
+				res.json({visible: foundPage.visible});
 			  }
 			});
-			
 		}
-
-	})
-	
+	});
 });
 
 
