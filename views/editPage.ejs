@@ -38,6 +38,9 @@
             url:"/admin/editpage/<%= page.id %>",
             data:formData
         })
+			.done(
+                window.location = "/admin/<%= page.id %>"
+			)
 
     });
 </script>
