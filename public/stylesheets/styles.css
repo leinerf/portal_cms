@@ -52,7 +52,7 @@ body{
 	/*rgba(0, 0, 0, 0.5);*/
 }
  .container-header{
-	margin-left: 3%;
+	padding: 3%;
 	font-size: 2.8em;
 }
 .container-paragraph{
@@ -361,4 +361,9 @@ a.register{
 }
 #button {
 	cursor: pointer;
+}
+
+#editor{
+	height: 180px;
+
 }

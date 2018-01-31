@@ -16,12 +16,15 @@
             <p class="email-header">Title</p>
             <input type="text" name="title" placeholder="Title" required><br>
             <p class="email-header">Content</p>
-            <textarea class="edit-textarea" name="content" placeholder="content" required></textarea>
+            <div id="editor">
+
+                <p><br></p>
+            </div>
             <p class="email-header">URL</p>
             <input type="text" name="url" placeholder="URL" required>
             <br>
             <button class="template-choice">Template Choice</button>
-            <input onclick="myFunction()" class="edit-submit" type="submit" name="submit">
+            <input  class="edit-submit" type="submit" name="submit">
         </form>
     </div>
 </div>
@@ -72,7 +75,8 @@
 </tfoot>
 </table>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" >
+
     // Initialize Variables
     var closePopup = document.getElementById("popupclose");
     var overlay = document.getElementById("overlay");
@@ -93,10 +97,7 @@
 	$(".delete").on("click",function(){
 		var button = $(this);
 		var pageId = $(this).attr("data-field-id");
-		console.log(pageId);
-		console.log("it went through here")
-		console.log("/admin/delete/"+ pageId + "\"");
-		$.ajax({
+        $.ajax({
 			method:"DELETE",
 			url:"/admin/delete/"+ pageId
 
@@ -108,9 +109,6 @@
     $(".visible").on("click",function(){
         var button = $(this);
         var pageId = $(this).attr("data-field-id");
-        console.log(pageId);
-        console.log("it went through here")
-        console.log("/admin/delete/"+ pageId + "\"");
         $.ajax({
             method:"PUT",
             url:"/admin/visible/"+ pageId
@@ -118,24 +116,20 @@
         })
             .done(function( json ) {
                 if(json.visible){
-                    console.log(button);
-                    console.log(button.style);
                     button[0].style.background = "white";
 				}
 				else{
-                    console.log(button);
-                    console.log(button.style);
                     button[0].style.background = "gray";
 				}
             });
     });
 
 
-	$(".form").submit(function(e){
-		e.preventDefault();
+	$(".form").submit(function(event){
+		event.preventDefault();//makes it so that the form doesnt send
 		var formData = {
 			title: $("input[name=title]").val(),
-			content: $("textarea").val(),
+			content: document.getElementsByClassName("ql-editor")[0].innerHTML,
 			url: $("input[name=url]").val()
 		}
 		$.ajax({
@@ -145,9 +139,8 @@
 			visible:true
 		})
 		.done(function( json ) {
-			console.log(json);
 			var content =
-				"<tr><td>" +json.title + "</td><td>" + json.date +
+				"<tr><td>" +json.title + "</td><td>" + moment(json.date).format( 'MMM-DD-YYYY') +
 				"</td><td>" +
 				"<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
 				"<form><button formaction=\"/admin/editpage/" + json.id +
@@ -165,6 +158,10 @@
 		popup.style.display = 'none';
 	});
 
-
+</script>
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
 </script>
 <% include partials/footer %>
