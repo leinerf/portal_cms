@@ -1,12 +1,21 @@
 <% include partials/header.ejs %>
 <div class="container">
-	<header class="container-header">
-		<%= page.title %>
-	</header>
+	
+	<div data-editable data-name="main-header" class="container-paragraph">
+		<header  class="container-header">
+			<%- page.title %>
+		</header>
+	</div>
 	<hr>
-	<div class="container-paragraph">
+	<div data-editable data-name="main-content" class="container-paragraph">
 		<%- page.content %>
 	</div>
 </div>
-
+<script type="text/javascript">
+	var title = "<%= page.title %>";
+	var content = "<%= page.content %>";
+	var id = "<%= page.id %>";
+</script>	
+<script src="/content-tools.min.js"></script>
+<script src="/editor.js"></script>
 <% include partials/footer.ejs %>

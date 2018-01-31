@@ -85,12 +85,14 @@ router.get('/editpage/:id',function(req,res,next){
 //posts the form data from edit page 
 //I should check for unique url 
 router.post('/editpage/:id',function(req,res,next){
+	console.log(req.body);
 	var formData = {
 					title: req.body.title,
 					content: req.body.content,
 					url: req.body.url,
 					date: Date.now()
 				}
+	console.log(formData);
 	pagesModel.findByIdAndUpdate(req.params.id,formData, function(err,foundPage){
 		if(err){
 			console.log(err);
@@ -101,6 +103,7 @@ router.post('/editpage/:id',function(req,res,next){
 			res.send("didnt find it");
 		}
 		else {
+			console.log('post')
 			console.log(foundPage);
 			res.redirect('/admin/' + req.params.id);
 		}
