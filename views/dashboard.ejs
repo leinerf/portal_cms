@@ -16,9 +16,7 @@
             <p class="email-header">Title</p>
             <input type="text" name="title" placeholder="Title" required><br>
             <p class="email-header">Content</p>
-            <div id="editor">
-
-            </div>
+            <textarea>Something</textarea>
             <p class="email-header">URL</p>
             <input type="text" name="url" placeholder="URL" required>
             <br>
@@ -45,7 +43,7 @@
 	<tr>
 		
 			<td>
-				<%= page.title %>
+				<%= page.title.replace( /(<([^>]+)>)/ig,""); %>
 			</td>
 			<td>
 				<%= moment(page.date).format( 'MMM-DD-YYYY HH:mm:ss') %>
@@ -93,7 +91,8 @@
     }
 
 	//create the delete button to delete the row if clicked
-	$(".delete").on("click",function(){
+	$("table").on("click",".delete",function(){
+		console.log("delete is")
 		var button = $(this);
 		var pageId = $(this).attr("data-field-id");
         $.ajax({
@@ -105,7 +104,7 @@
 			button.parent().parent().remove();
 		});
 	});
-    $(".visible").on("click",function(){
+    $("table").on("click",".visible",function(){
         var button = $(this);
         var pageId = $(this).attr("data-field-id");
         $.ajax({
@@ -128,7 +127,7 @@
 		event.preventDefault();//makes it so that the form doesnt send
 		var formData = {
 			title: $("input[name=title]").val(),
-			content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+			content: document.getElementById("tinymce").innerHTML,
 			url: $("input[name=url]").val()
 		}
 		$.ajax({
@@ -142,10 +141,10 @@
 				"<tr><td>" +json.title + "</td><td>" + moment(json.date).format( 'MMM-DD-YYYY HH:mm:ss') +
 				"</td><td>" +
 				"<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
-				"<form><button formaction=\"/admin/editpage/" + json.id +
+				"<button class=\"visible\" data-field-id=\"" + json.id +  "\" >visible</button>" +
+				"<form><button formaction=\"/admin/editpage/" + json.id + 
 				"\" formmethod=\"get\" class=\"edit\"> edit</button><button formaction=\"/admin/showpage/" + json.id +
-				"\" formmethod=\"get\" class=\"show\"> show</button><button formaction=\"/admin/visible/" + json.id +
-				"\" formmethod=\"post\" class=\"visible\">visible</button></form></td></tr>"
+				"\" formmethod=\"get\" class=\"show\"> show</button></form></td></tr>"
 			$( "table tbody" ).append(content);
 		});
 	});
@@ -159,8 +158,10 @@
 
 </script>
 <script>
-    var quill = new Quill('#editor', {
-        theme: 'snow'
-    });
+
 </script>
+
+
+  <script>tinymce.init({ selector:'textarea' });</script>
+    
 <% include partials/footer %>

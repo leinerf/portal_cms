@@ -1,15 +1,3 @@
-refactor
-change these to buttons 
-
-make sure theres session thing
-html form button 
-<form action="" method="POST">
-input type hidden
-
-
-create the popup
-select it and initially make it display none
-select the popup
-if click != popup:
-    close popup
+fix visible
+fix the showpage
 

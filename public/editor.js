@@ -24,8 +24,9 @@ editor.addEventListener('saved', function (ev) {
 
     // Collect the contents of each region into a FormData instance
     formData = {
-        title: regions["main-header"],
-        content: regions["main-content"]
+        title: regions["main-header"] || title,
+        content: regions["main-content"] || content,
+        url: url
         };
     console.log(formData);
 
@@ -46,10 +47,18 @@ editor.addEventListener('saved', function (ev) {
     console.log(id);
     $.ajax({
             method:"POST",
-            url:"/admin/editpage/" +id ,
-            data:formData,
-            visible:true
-    }).done(
-    )
+            url: "/admin/editpage/" + id ,
+            data:formData
+    }).done(function(json){
+        editor.busy(false);
+        if (json != null) {
+                // Save was successful, notify the user with a flash
+                new ContentTools.FlashUI('ok');
+        } else {
+            // Save failed, notify the user with a flash
+            new ContentTools.FlashUI('no');
+        }
+    })  
+
 
 });
