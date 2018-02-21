@@ -30,9 +30,11 @@ li a:hover {
     background-color: #D3D3D3;
 }
 body{
-
+	background:#89cff0;
 	background-image: url("../images/sea.jpg");
+	background-repeat: no-repeat;
 	background-size: cover;
+
 }
 .container{
 	background-color: rgba(211,211,211,0.7);
@@ -134,7 +136,7 @@ header.table-header{
 }
 
 footer  {
-
+	position: absolute;
   	bottom:0;
   	width: 99.2%;
 	display: block;

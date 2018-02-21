@@ -31,8 +31,10 @@ router.post('/auth/login',function(req,res,next){
 				console.log(err);
 				res.render('login',{error:err});
 			}
-			else if(foundUser === null){
-				res.render('login');
+			else if(foundUser === null || foundUser === undefined){
+				console.log("===================================hello============================");
+				console.log("hello");
+				res.render('login',{error:"user not found"});
 			}
 			else if(req.body.password === foundUser.password){
 				console.log("password works");
@@ -67,8 +69,12 @@ router.post('/auth/register',function(req,res,next){
 	userModel.create(formData, function(err, newUser){
 		console.log(newUser);
 		if(err){
-			console.log(err);
-			res.json(err.message);
+			if(err.code === 11000){
+				console.log("it goes here")
+				res.render("register",{msg:"duplicate email"})
+			}
+			
+			res.render("register",{msg:"something went wrong try again"});
 		} else {
 			console.log(newUser);
 			res.redirect('/auth/login')		

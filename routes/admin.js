@@ -49,10 +49,14 @@ router.post('/addpage/:id',function(req,res,next){
 		console.log(newUser);
 		if(err){
 			console.log(err);
+			if(err.code== 11000){
+				return res.json({msg:"duplicate url",success:0})
+			}
 			res.json(err.message);
+
 		} else {
 			console.log(newUser);
-			res.json({title:newUser.title,content:newUser.content,url:newUser.url,id:newUser._id,date:newUser.date});
+			res.json({title:newUser.title,content:newUser.content,url:newUser.url,id:newUser._id,date:newUser.date,success:1});
 		}
 	})
 	

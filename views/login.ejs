@@ -2,6 +2,9 @@
 
 
 <div class="form-container">
+	<%if(typeof error !== "undefined"){%>
+		<p style="background:#FFCCCB;padding: 1%;border-radius: 5px"><%=error %></p>	
+	<%}%>
 	<header>Login</header>
 	<br>
 	<form class="form" method="post" action="/auth/login">

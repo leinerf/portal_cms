@@ -127,7 +127,7 @@
 		event.preventDefault();//makes it so that the form doesnt send
 		var formData = {
 			title: $("input[name=title]").val(),
-			content: document.getElementById("tinymce").innerHTML,
+			content: tinyMCE.activeEditor.getContent(),
 			url: $("input[name=url]").val()
 		}
 		$.ajax({
@@ -137,7 +137,11 @@
 			visible:true
 		})
 		.done(function( json ) {
-			var content =
+			if(json.success === 0){
+				$("table-container").append(`<h1>${json.msg}</h1>`);
+			}
+			else{
+				var content =
 				"<tr><td>" +json.title + "</td><td>" + moment(json.date).format( 'MMM-DD-YYYY HH:mm:ss') +
 				"</td><td>" +
 				"<button class=\"delete\" data-field-id=\"" + json.id +  "\" >delete</button>" +
@@ -145,7 +149,9 @@
 				"<form><button formaction=\"/admin/editpage/" + json.id + 
 				"\" formmethod=\"get\" class=\"edit\"> edit</button><button formaction=\"/admin/showpage/" + json.id +
 				"\" formmethod=\"get\" class=\"show\"> show</button></form></td></tr>"
-			$( "table tbody" ).append(content);
+				$( "table tbody" ).append(content);	
+			}
+			
 		});
 	});
 
@@ -163,5 +169,5 @@
 
 
   <script>tinymce.init({ selector:'textarea' });</script>
-    
+
 <% include partials/footer %>
