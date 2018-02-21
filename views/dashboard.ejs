@@ -18,7 +18,7 @@
             <p class="email-header">Title</p>
             <input type="text" name="title" placeholder="Title" required><br>
             <p class="email-header">Content</p>
-            <textarea>Something</textarea>
+            <textarea id="somethin3">Something</textarea>
             <p class="email-header">URL</p>
             <input type="text" name="url" placeholder="URL" required>
             <br>
@@ -162,7 +162,7 @@
 		event.preventDefault();//makes it so that the form doesnt send
 		var formData = {
 			title: $("input[name=title]").val(),
-			content: tinyMCE.activeEditor.getContent(),
+			content: tinyMCE.get('somethin3').getContent(),
 			url: $("input[name=url]").val()
 		}
 		$.ajax({
