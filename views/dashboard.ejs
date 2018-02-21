@@ -6,6 +6,8 @@
 -->
 
 <% include partials/header %>
+
+
 <div id="overlay"></div>
 <div id="popup">
     <div class="popupcontrols">
@@ -25,6 +27,16 @@
         </form>
     </div>
 </div>
+<div id="sharingDiv">
+    <div class="">
+        <form id="sharingPage" ><!-- // action="/admin/addpage/<%= user_id %>">-->
+            
+            <textarea id="sharingText" style="text-decoration: none">place url here</textarea>
+            <br>
+            <input  class="edit-submit" type="submit" name="submit">
+        </form>
+    </div>
+</div>
 <div class="dashboard-container">
 <div class="header-content">
 	<header class="table-header">Table of Templates</header>
@@ -39,6 +51,7 @@
 	<th>Options</th>
 </thead>
 <tbody>
+
 <%pages.forEach(function(page){ %>
 	<tr>
 		
@@ -59,7 +72,7 @@
                 <form>
 				<button formaction="/admin/editpage/<%= page.id %>" formmethod="get" class="edit"> edit</button>
 				<button formaction="/admin/showpage/<%= page.id %>" formmethod="get" class="show"> show</button>
-
+				<button data-field-id="<%= page.id %>" type="button" class="btn btn-primary shareBtn"  data-toggle="modal" data-target=".bd-example-modal-sm">share</button>
 				</form>
 			</td>
 		
@@ -71,7 +84,29 @@
 	
 </tfoot>
 </table>
+
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="padding: 1%">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <form id="share_form">
+      	Email: <input type="email" id="twitterEmail" name="twitterEmail" required> <br>
+      	Password: <input type="password" id="twitterPassword" name="twitterPassword" required>
+      	<input type="submit" name="">
+      </form>
+    </div>
+  </div>
 </div>
+<script type="text/javascript">
+	var sharingButton;
+	var SharingPageId;
+	$(".shareBtn").on("click",function(){
+		SharingButton = $(this);
+		SharingPageId = $(this).attr("data-field-id");
+		console.log(SharingPageId);
+	})
+
+</script>
 <script type="text/javascript" >
 
     // Initialize Variables
@@ -163,11 +198,69 @@
 	});
 
 </script>
-<script>
+<script>tinymce.init({ selector:'textarea' });</script>
+<script type="text/javascript">
+	var sharing_id = undefined;
+	var sharing_url = null;
+	$("#share_form").submit(function(event){
+		var button = $(this);
+		var pageId = $(this).attr("data-field-id");
+		console.log(pageId);
+
+		event.preventDefault();//makes it so that the form doesnt send
+		var formData = {
+			email: $("input[name=twitterEmail]").val(),
+			
+			password: $("input[name=twitterPassword]").val()
+		}
+		console.log(formData)
+		$.ajax({
+			method:"POST",
+			url:"http://localhost:5000/users/share",
+			data:formData,
+			dataType: 'json',
+			crossDomain: true
+		})
+		.done(function( json ) {
+			console.log(json)
+			if(json.authenticated === true){
+				sharing_id = json.user_id;
+				author_name = json.author;
+				sharing_url = `http://localhost:5000/users/${sharing_id}/tweets/`
+				sharing_text = "http://localhost:3000/showpage/"+ SharingPageId;
+				console.log($("#sharingDiv"))
+				tinyMCE.get('sharingText').setContent(sharing_text);
+				document.getElementById("sharingDiv").style.display = "block"
+				$("#sharingPage").submit(function(event){
+					event.preventDefault();//makes it so that the form doesnt send
+					content = `<a href="${tinyMCE.get('sharingText').getContent().replace( /(<([^>]+)>)/ig,"")}">${tinyMCE.get('sharingText').getContent().replace( /(<([^>]+)>)/ig,"")}</a>`
+						
+					var dataForm2 = {
+						userId: sharing_id,
+						text: content,
+						author: author_name,
+						
+						}
+					console.log("hwpoeirhwpe")
+					console.log(dataForm2)
+					$.ajax({
+						method:"POST",
+						url:sharing_url,
+						data:dataForm2,
+						dataType: 'json',
+						crossDomain: true
+					})
+					.done(function( json ) {
+						console.log(json)
+						document.getElementById("sharingDiv").style.display = "none"
+						$("#sharingPage").unbind("submit");
+					});
+				});
+			}
+			
+		});
+	});
+	
 
 </script>
-
-
-  <script>tinymce.init({ selector:'textarea' });</script>
-
 <% include partials/footer %>
